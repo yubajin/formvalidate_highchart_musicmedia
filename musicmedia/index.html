@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>midtest2</title>
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+			}
+			#wrap{
+				width: 300px;
+				margin: 20px auto;
+			}
+			audio{
+				width: 300px;
+			}
+			button{
+				margin-left: 10px;
+			}
+			ul{
+				visibility: hidden;
+			}
+			ul li{
+				padding: 4px 0px 4px 10px;
+				list-style-type: none;
+				background: green;
+				color: lightgoldenrodyellow;
+				font-size: 18px;
+			}
+			ul li:hover{
+				background: lightgoldenrodyellow;
+				color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<audio id="audio" controls="controls">
+				<source src="img/juicy.mp3"></source>
+			</audio><br/>
+			<div>
+				<button type="button"  style="margin: 4px 0px 4px  5px;" onclick="nextSongs()">下一曲</button>
+				<button type="button"  style="margin-bottom: 4px;margin-left: 200px;" onclick="lastSongs()">上一曲</button>
+			</div>
+			<div style="height: 240px; width:300px">
+					<a id="list" style="background: grey; display: block; padding: 4px 0px 4px 6px">展开播放列表>>></a>
+					<ul id="ul">
+						<li id="li1">juicy.mp3</li>
+						<li id="li2">WeBelieve.mp3</li>
+						<li id="li3">music.mp3</li>
+						<li id="li4">Faded.aac</li>
+						<li id="li5">HereWithYour.aac</li>
+						<li id="li6">TalkAnyMore.aac</li>
+						<li id="li7">小黄人.aac</li>
+					</ul>
+			</div>
+		<div>
+	</body>
+		<script>
+			var audio = document.getElementById("audio");
+			var urlList = ['img/juicy.mp3','img/WeBelieve.mp3','img/music.mp3','img/Faded.aac','img/HereWithYour.aac','img/TalkAnyMore.aac','img/小黄人.aac'];
+			var urlLen = urlList.length;
+			var curr = 0;
+			//下一曲
+			function nextSongs(){
+				if(curr>=urlLen-1){
+					curr = 0;
+				}
+				else{
+					curr++;
+				}
+				audio.src = urlList[curr];
+				audio.preload="auto";
+				audio.autoplay="autoplay";
+			}
+			//上一曲
+			function lastSongs(){
+				var audio = document.getElementById("audio");
+				if(curr<=0){
+					curr = urlLen - 1;
+				}
+				else{
+					curr--;
+				}
+				audio.src = urlList[curr];
+				audio.preload="auto";
+				audio.autoplay="autoplay";
+			}
+			
+			onload = function(){
+				var lis=document.querySelectorAll("li");
+				var a = document.getElementById("list");
+				var ul = document.getElementById("ul");
+				a.onclick = function(){
+					if(getComputedStyle(ul).visibility=='hidden'){
+						ul.style.visibility="visible";
+						a.innerHTML="关闭播放列表>>>";
+					}
+					else{
+						ul.style.visibility="hidden";
+						a.innerHTML="展开播放列表>>>";
+					}
+				}
+				for(var i = 0; i < lis.length; i++){
+					lis[i].onclick = function(){
+						audio.poster=null;
+						audio.src="img/"+this.innerText;
+						audio.autoplay="autoplay";
+					}
+				}
+			}
+		</script>
+</html>
